@@ -17,24 +17,10 @@ async function getSanitizedParams(params: PageProps["searchParams"]) {
     return { q, validGenres };
 }
 
-export async function generateMetadata({
-    searchParams,
-}: PageProps): Promise<Metadata> {
-    const { q, validGenres } = await getSanitizedParams(searchParams);
-
-    let title = "Explore Movies";
-
-    if (q && validGenres.length > 0) {
-        title = `"${q}" in ${validGenres.map(formatGenreLabel).join(", ")}`;
-    } else if (q) {
-        title = `Search: ${q}`;
-    } else if (validGenres.length > 0) {
-        title = validGenres.map(formatGenreLabel).join(", ");
-    }
-
+export async function generateMetadata(): Promise<Metadata> {
     return {
-        title,
-        description: `Browse movies. Currently viewing ${title}.`,
+        title: "betssonMovies",
+        description: "Browse Movies",
     };
 }
 

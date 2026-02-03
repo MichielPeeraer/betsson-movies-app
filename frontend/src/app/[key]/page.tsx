@@ -14,12 +14,31 @@ import {
 import { IconClock, IconStarFilled } from "@tabler/icons-react";
 import { notFound } from "next/navigation";
 import { formatGenreLabel } from "@/lib/genres";
+import { Metadata } from "next";
 
-export default async function MovieDetailPage({
-    params,
-}: {
+interface PageProps {
     params: Promise<{ key: string }>;
-}) {
+}
+
+export async function generateMetadata({
+    params,
+}: PageProps): Promise<Metadata> {
+    const { key } = await params;
+
+    try {
+        const movie = await moviesApi.getByKeySSR(key);
+        if (!movie) return { title: "Movie Not Found" };
+
+        return {
+            title: movie.name,
+            description: movie.description,
+        };
+    } catch (error) {
+        return { title: "Error" };
+    }
+}
+
+export default async function MovieDetailPage({ params }: PageProps) {
     const { key } = await params;
     const imageBase =
         process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
