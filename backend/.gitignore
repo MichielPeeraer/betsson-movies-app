@@ -1,0 +1,45 @@
+# Node modules
+node_modules/
+npm-debug.log*
+
+# Logs
+logs
+*.log
+pids
+*.pid
+*.seed
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# TypeScript
+dist/
+build/
+*.tsbuildinfo
+
+# Editor / OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Docker
+docker-compose.override.yml
+**/tmp/
+*.swp
+*.swo
+
+# Misc
+*.bak
+*.old
+*.orig
+
+# Jest
+coverage/
+*.snap
