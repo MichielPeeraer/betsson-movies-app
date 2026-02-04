@@ -15,6 +15,7 @@
         "@mantine/core": "8.3.14",
         "@mantine/hooks": "8.3.14",
         "@tabler/icons-react": "^3.36.1",
+        "clsx": "^2.1.1",
         "next": "15.5.3",
         "react": "19.1.1",
         "react-dom": "19.1.1"
