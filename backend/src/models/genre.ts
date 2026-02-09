@@ -1,13 +1,15 @@
-export enum Genre {
-    Action = "action",
-    Adventure = "adventure",
-    Comedy = "comedy",
-    Crime = "crime",
-    Drama = "drama",
-    History = "history",
-    Biography = "biography",
-    Mystery = "mystery",
-    Thriller = "thriller",
-    Scifi = "scifi",
-    Sport = "sport",
-}
+export const GENRES = [
+    "action",
+    "adventure",
+    "comedy",
+    "crime",
+    "drama",
+    "history",
+    "biography",
+    "mystery",
+    "thriller",
+    "scifi",
+    "sport",
+] as const;
+
+export type Genre = (typeof GENRES)[number];
