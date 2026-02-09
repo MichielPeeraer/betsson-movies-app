@@ -1,24 +1,7 @@
-import swaggerJsdoc from "swagger-jsdoc";
+import YAML from "yamljs";
+import path from "path";
 
-const PORT = process.env.PORT!;
+// Load the YAML file directly
+const swaggerSpec = YAML.load(path.join(__dirname, "../swagger.yaml"));
 
-const options: swaggerJsdoc.Options = {
-    definition: {
-        openapi: "3.0.0",
-        info: {
-            title: "Betsson Movies API",
-            version: "1.0.0",
-            description:
-                "Movie collection API built with Node, Express & MongoDB",
-        },
-        servers: [
-            {
-                url: `http://localhost:${PORT}`,
-                description: "Local dev",
-            },
-        ],
-    },
-    apis: ["./src/routes/*.ts"], // <-- where Swagger reads JSDoc from
-};
-
-export const swaggerSpec = swaggerJsdoc(options);
+export { swaggerSpec };

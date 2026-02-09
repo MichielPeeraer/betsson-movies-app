@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+    title: Movie API
+    version: 1.0.0
+    description: A server-side rendered movie application API
+
+servers:
+    - url: http://localhost:3000
+      description: Development server
+
+components:
+    schemas:
+        Genre:
+            type: string
+            enum:
+                [
+                    action,
+                    adventure,
+                    comedy,
+                    crime,
+                    drama,
+                    biography,
+                    history,
+                    sport,
+                    mystery,
+                    thriller,
+                    scifi,
+                ]
+
+        Movie:
+            type: object
+            required: [key, name, description, genres, rate, length, img]
+            properties:
+                key:
+                    type: string
+                    example: deadpool
+                name:
+                    type: string
+                    example: Deadpool
+                description:
+                    type: string
+                genres:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Genre"
+                rate:
+                    type: number
+                    format: float
+                length:
+                    type: number
+                img:
+                    type: string
+
+paths:
+    /api/movies:
+        get:
+            summary: Get all movies
+            parameters:
+                - in: query
+                  name: g
+                  description: Filter by genres
+                  schema:
+                      type: array
+                      items:
+                          $ref: "#/components/schemas/Genre"
+                - in: query
+                  name: q
+                  description: Search by name
+                  schema:
+                      type: string
+            responses:
+                200:
+                    description: A list of movies
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Movie"
+
+    /api/movies/{key}:
+        get:
+            summary: Get movie by key
+            parameters:
+                - in: path
+                  name: key
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    description: Movie details
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Movie"
+                404:
+                    description: Movie not found
