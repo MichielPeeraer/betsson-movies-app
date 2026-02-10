@@ -21,12 +21,12 @@ const MovieSchema: Schema = new Schema({
         required: true,
     },
     rate: { type: Number, required: true, min: 0, max: 10 },
-    length: { type: Number, required: true },
+    length: { type: Number, required: true, min: 0 },
+    year: { type: Number, required: true },
     img: { type: String, required: true },
 });
 
 // INDEXES (allows for much faster searching)
-MovieSchema.index({ name: "text" });
-MovieSchema.index({ genres: 1 });
+MovieSchema.index({ genres: 1, name: 1 });
 
 export default mongoose.model<IMovie>("Movie", MovieSchema);

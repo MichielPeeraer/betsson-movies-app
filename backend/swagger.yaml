@@ -48,6 +48,8 @@ components:
                     format: float
                 length:
                     type: number
+                year:
+                    type: number
                 img:
                     type: string
 

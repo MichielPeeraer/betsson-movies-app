@@ -21,5 +21,6 @@ export interface Movie {
     genres: Genre[];
     rate: number;
     length: number;
+    year: number;
     img: string;
 }

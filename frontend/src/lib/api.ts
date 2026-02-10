@@ -26,7 +26,11 @@ const buildMoviesUrl = ({ g, q }: MoviesQuery = {}) => {
 
 export async function fetcherSSR<T>(url: string): Promise<T> {
     const res = await fetch(`${SSR_BASE}${url}`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    if (!res.ok) {
+        const error: any = new Error(`API error: ${res.status}`);
+        error.status = res.status;
+        throw error;
+    }
     return res.json();
 }
 

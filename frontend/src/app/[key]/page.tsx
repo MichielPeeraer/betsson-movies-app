@@ -11,7 +11,11 @@ import {
     SimpleGrid,
     Divider,
 } from "@mantine/core";
-import { IconClock, IconStarFilled } from "@tabler/icons-react";
+import {
+    IconCalendarEvent,
+    IconClock,
+    IconStarFilled,
+} from "@tabler/icons-react";
 import { notFound } from "next/navigation";
 import { formatGenreLabel } from "@/lib/helpers";
 import { Metadata } from "next";
@@ -27,13 +31,13 @@ export async function generateMetadata({
 
     try {
         const movie = await moviesApi.getByKeySSR(key);
-        if (!movie) return { title: "Movie Not Found" };
 
         return {
             title: movie.name,
             description: movie.description,
         };
-    } catch (error) {
+    } catch (error: any) {
+        if (error.status === 404) return { title: "Movie not found" };
         return { title: "Error" };
     }
 }
@@ -44,7 +48,6 @@ export default async function MovieDetailPage({ params }: PageProps) {
 
     try {
         const movie = await moviesApi.getByKeySSR(key);
-        if (!movie) return notFound();
 
         return (
             <Container py="lg" px={0}>
@@ -122,6 +125,27 @@ export default async function MovieDetailPage({ params }: PageProps) {
                                     Minutes
                                 </Text>
                             </Stack>
+
+                            <Divider orientation="vertical" />
+
+                            <Stack gap={2}>
+                                <Group gap={6}>
+                                    <IconCalendarEvent
+                                        size={20}
+                                        color="var(--mantine-color-dimmed)"
+                                    />
+                                    <Text
+                                        className="movie-year"
+                                        fz="xl"
+                                        fw={700}
+                                    >
+                                        {movie.year}
+                                    </Text>
+                                </Group>
+                                <Text size="xs" c="dimmed" ta="center">
+                                    Release
+                                </Text>
+                            </Stack>
                         </Group>
 
                         <Box>
@@ -141,7 +165,8 @@ export default async function MovieDetailPage({ params }: PageProps) {
                 </SimpleGrid>
             </Container>
         );
-    } catch (error) {
-        return notFound();
+    } catch (error: any) {
+        if (error.status === 404) return notFound();
+        throw error;
     }
 }
