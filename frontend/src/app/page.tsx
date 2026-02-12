@@ -12,7 +12,7 @@ async function getSanitizedParams(params: PageProps["searchParams"]) {
     const q = typeof p.q === "string" ? p.q.trim() : undefined;
     const g = p.g;
 
-    const validGenres = [p.g].flat().filter(isValidGenre);
+    const validGenres = [g].flat().filter(isValidGenre);
 
     return { q, validGenres };
 }

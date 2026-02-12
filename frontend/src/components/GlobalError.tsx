@@ -1,20 +1,16 @@
 "use client";
+import { ErrorIcon, ICONS } from "@/types";
 import { Button, Center, Code, Stack, Text, Title } from "@mantine/core";
-import {
-    IconHome,
-    IconProps,
-    IconRefresh,
-    IconServerOff,
-} from "@tabler/icons-react";
+import { IconHome, IconRefresh } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ForwardRefExoticComponent, RefAttributes, useTransition } from "react";
+import { useTransition } from "react";
 
 interface GlobalErrorProps {
     title?: string;
     desc?: string;
-    Icon?: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>;
-    IconColor?: string;
+    icon?: ErrorIcon;
+    iconColor?: string;
     error?: Error & { digest?: string };
     reset?: () => void;
 }
@@ -22,14 +18,15 @@ interface GlobalErrorProps {
 export function GlobalError({
     title = "Unable to reach the server",
     desc = "The cinematic server encountered a hiccup. Please check your connection or try again later.",
-    Icon = IconServerOff,
-    IconColor = "var(--mantine-color-red-7)",
+    icon = "server-off",
+    iconColor = "var(--mantine-color-red-7)",
     error,
     reset,
 }: GlobalErrorProps) {
     const pathname = usePathname();
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
+    const IconComponent = ICONS[icon ?? "server-off"];
 
     const handleReset = () => {
         startTransition(() => {
@@ -40,7 +37,7 @@ export function GlobalError({
     return (
         <Center h="80vh">
             <Stack align="center" gap="xs">
-                <Icon size={64} stroke={1.5} color={IconColor} />
+                <IconComponent size={64} stroke={1.5} color={iconColor} />
                 <Title order={2} size="h3" ta="center">
                     {title}
                 </Title>
